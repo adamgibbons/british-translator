@@ -23,6 +23,20 @@ describe("Brit", function() {
     expect(brit.translate("the bathroom")).toBe("the watercloset");
   });
 
+  it("replaces multiple words in a phrase", function() {
+    expect(brit.translate("the truck is a bathroom")).toBe("the lorry is a watercloset");
+  });
+
+  it("detects a word followed by a comma", function() {
+    expect(brit.hasComma("bathroom,")).toBe(true);
+  });
+
+  it("replaces a word followed by a comma", function() {
+    expect(brit.translate("bathroom,")).toBe("watercloset,");
+  });
+
+
+
 
   // describe("when song has been paused", function() {
   //   beforeEach(function() {
