@@ -307,20 +307,19 @@ Brit.prototype.replaceWord = function(word) {
       return this.wordList[i][1];
     }
 
-    if (this.hasComma(word)) {
+    if (this.hasPunctuation(word)) {
       if ((this.wordList[i][0]) == word.slice(0, -1)) {
-        return this.wordList[i][1] + ',';
+        return this.wordList[i][1] + word.slice(-1);
       }      
     }
-
 
   }
 
   return word;
 }
 
-Brit.prototype.hasComma = function(word) {
-  if (word.search(',') > 0) {
+Brit.prototype.hasPunctuation = function(word) {
+  if (word.search(/\.|\!|,|\?|;/) > 0) {
     return true;
   }
   return false;
@@ -336,8 +335,32 @@ Brit.prototype.isWord = function(input) {
 }
 
 
-
 Brit.prototype.translate = function(input) {
+
+  if (typeof input !== 'string') {
+    try {
+      throw new TypeError("I an't a bloody calculator. Gimme a string, meghead!");
+    } catch (e) {
+      return e;
+    }
+  }
+
+  if (input.length < 1) {
+    try {
+      throw new Error("Well gimme something to work with, at least!");
+    } catch (e) {
+      return e;
+    }
+  }
+
+  if (input.length > 200) {
+    try {
+      throw new Error("You an't Dickens, mate. Shorten them prose!");
+    } catch (e) {
+      return e;
+    }
+  }
+
   var phrase = [];
   if (this.isWord(input)) {
     return this.replaceWord(input);

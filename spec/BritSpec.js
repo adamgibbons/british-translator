@@ -6,8 +6,20 @@ describe("Brit", function() {
     
   });
 
-  it("returns a word", function() {
-    expect(brit.replaceWord("hello")).toEqual("hello");
+  it("throws an error when passed a non-string", function() {
+    var responseError = new TypeError("I an't a bloody calculator. Gimme a string, meghead!");
+    expect(brit.translate(1)).toEqual(responseError);
+  });
+
+  it ("throws an error when passed an empty string", function() {
+    var responseError = new Error("Well gimme something to work with, at least!");
+    expect(brit.translate('')).toEqual(responseError);
+  });
+
+  it ("throws an error when passed a lengthy string", function() {
+    var responseError = new Error("You an't Dickens, mate. Shorten them prose!");
+    var prose = new Array(50).join("ag me fecit ")
+    expect(brit.translate(prose)).toEqual(responseError);
   });
 
   it("replaces a word", function() {
@@ -27,13 +39,15 @@ describe("Brit", function() {
     expect(brit.translate("the truck is a bathroom")).toBe("the lorry is a watercloset");
   });
 
-  it("detects a word followed by a comma", function() {
-    expect(brit.hasComma("bathroom,")).toBe(true);
+  it("detects a word followed by punctuation", function() {
+    expect(brit.hasPunctuation("bathroom,")).toBe(true);
   });
 
-  it("replaces a word followed by a comma", function() {
-    expect(brit.translate("bathroom,")).toBe("watercloset,");
+  it("replaces a word followed by punctuation", function() {
+    expect(brit.translate("bathroom!")).toBe("watercloset!");
   });
+
+
 
 
 
