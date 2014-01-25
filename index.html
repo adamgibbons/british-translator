@@ -1,0 +1,59 @@
+<html>
+<head>
+  <title>American/British English translator</title>
+  <script src="src/Brit.js"></script>
+
+  <style>
+    body{
+      background: #aaa;
+      font-size: 18px;
+      margin: 0 auto;
+    }
+    .translator {
+      border: 1px solid #aaa;
+      padding: 1em;
+      min-width: 20em;
+      max-width: 24em;
+      margin: 5em auto 0;
+    }
+    textarea {
+      font-size: 1em;
+      display:block;
+      width:99%;
+      border: none;
+      margin-bottom: 1em;
+      padding: 1em;
+      min-height: 10em;
+    }
+    .btn {
+      font-size: 1em;
+      padding: 1em;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="translator">
+    <textarea placeholder="Enter some American English here..."></textarea>
+    <button class="btn" onclick="translateThis()">Britify my English!</button>
+    <p id="translation"></p>
+  </div>
+
+  <script>
+    var brit = new Brit();
+
+    function translateThis() {
+      var originalPhrase = document.getElementsByTagName('textarea')[0].value;
+
+      var translatedPhrase = brit.translate(originalPhrase);
+
+      document.getElementById('translation').innerHTML = 'Translation: ' + translatedPhrase;
+    };
+
+  </script>
+
+</body>
+</html>
