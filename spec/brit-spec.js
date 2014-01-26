@@ -7,7 +7,6 @@ describe("Brit", function() {
     phraseList = [
       ['legal holiday', 'bank holiday'],
       ['cookie sheet', 'baking tray']];
-    
   });
 
   it("recognizes a word", function() {
