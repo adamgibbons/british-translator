@@ -10,29 +10,13 @@ describe("Brit", function() {
     
   });
 
-  it("throws an error when passed a non-string", function() {
-    var responseError = new TypeError("I an't a bloody calculator. Gimme a string, meghead!");
-    expect(brit.translate(1)).toEqual(responseError);
-  });
-
-  it ("throws an error when passed an empty string", function() {
-    var responseError = new Error("Well gimme something to work with, at least!");
-    expect(brit.translate('')).toEqual(responseError);
-  });
-
-  it ("throws an error when passed a lengthy string", function() {
-    var responseError = new Error("You an't Dickens, mate. Shorten them prose!");
-    var prose = new Array(50).join("ag me fecit ")
-    expect(brit.translate(prose)).toEqual(responseError);
+  it("recognizes a word", function() {
+    expect(brit.isWord("word")).toBe(true);
+    expect(brit.isWord("two words")).toBe(false);
   });
 
   it("replaces a word", function() {
     expect(brit.checkAgainstWords("truck")).toBe("lorry");
-  });
-
-  it("recognizes a word", function() {
-    expect(brit.isWord("word")).toBe(true);
-    expect(brit.isWord("two words")).toBe(false);
   });
 
   it("replaces a word in a phrase", function() {
@@ -75,6 +59,25 @@ describe("Brit", function() {
 
 
 
+
+
+  
+
+  it("throws an error when passed a non-string", function() {
+    var responseError = new TypeError("I an't a bloody calculator. Gimme a string, meghead!");
+    expect(brit.translate(1)).toEqual(responseError);
+  });
+
+  it ("throws an error when passed an empty string", function() {
+    var responseError = new Error("Well gimme something to work with, at least!");
+    expect(brit.translate('')).toEqual(responseError);
+  });
+
+  it ("throws an error when passed a lengthy string", function() {
+    var responseError = new Error("You an't Dickens, mate. Shorten them prose!");
+    var prose = new Array(50).join("ag me fecit ")
+    expect(brit.translate(prose)).toEqual(responseError);
+  });
 
 
 
