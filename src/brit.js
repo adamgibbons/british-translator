@@ -333,12 +333,11 @@
     ['zipper', 'zip']];
 
   Brit.prototype.checkAgainstWords = function(word) {
+    if (this.isPossessiveNoun(word)) {
+      return this.replacePossessiveNoun(word);
+    }
+
     for (var i = 0; i < this.wordList.length; i++) {
-
-      if (this.isPossessiveNoun(word)) {
-        return this.replacePossessiveNoun(word);
-      }
-
       if (this.wordList[i][0] == word) {
         return this.wordList[i][1];
       }
@@ -346,7 +345,7 @@
       if (this.hasPunctuation(word)) {
         if ((this.wordList[i][0]) == word.slice(0, -1)) {
           return this.wordList[i][1] + word.slice(-1);
-        }      
+        }
       }
 
     }
