@@ -2,19 +2,28 @@
 <head>
   <title>American/British English translator</title>
   <script src="src/Brit.js"></script>
-
   <style>
     body{
-      background: #aaa;
+      padding-top: 1em;
+      font-family: 'helvetica neue', helvetica, sans-serif;
+      background-color: #16a085;
       font-size: 18px;
       margin: 0 auto;
+      text-align: center;
+    }
+    h1 {
+      color: white;
+      font-size: 1.66em;
     }
     .translator {
-      border: 1px solid #aaa;
+      background-color: #E7ECEE;
+    }
+    .translator, #translation {
       padding: 1em;
       min-width: 20em;
       max-width: 24em;
-      margin: 5em auto 0;
+      margin: 1em auto 0;
+      text-align: left;
     }
     textarea {
       font-size: 1em;
@@ -24,31 +33,55 @@
       margin-bottom: 1em;
       padding: 1em;
       min-height: 10em;
+      background-color: #E7ECEE;
+      border: 3px solid #16a085;
+      color: #212F3F;
+    }
+    textarea:focus, .btn:focus {
+      box-shadow: none;
+      outline: none !important;
     }
     .btn {
       font-size: 1em;
       padding: 1em;
       border: none;
       cursor: pointer;
+      background-color: #16a085;
+      color: white;
+    }
+    .btn:hover, .btn:focus {
+      background-color: #1abc9c
+    }
+    #translation {
+      color: white;
+    }
+
+    .btn, .translator, textarea {
+      -webkit-border-radius: 3px; 
+      -moz-border-radius: 3px; 
+      border-radius: 3px;
     }
   </style>
-
 </head>
+
 <body>
+  <h1>American English &raquo; British English Translator</h1>
 
   <div class="translator">
-    <textarea placeholder="Enter some American English here..."></textarea>
-    <button class="btn" onclick="translateThis()">Translate</button>
+    <textarea placeholder="Enter some American English here..." autofocus></textarea>
+    <button class="btn" onclick="translatePhrase()">Translate</button>
     <button class="btn" onclick="generatePhrase()">Generate phrase</button>
-    <button class="btn" onclick="clearForm()">Reset</button>
-    <p id="translation"></p>
-
+    <button class="btn" onclick="clearForm()">Clear</button>
   </div>
 
+  <p id="translation"></p>
+
   <script>
+    // Initialize translator
     var brit = new Brit();
 
-    function translateThis() {
+    // Handle button clicks
+    function translatePhrase() {
       var originalPhrase = document.getElementsByTagName('textarea')[0].value;
       var translatedPhrase = brit.translate(originalPhrase);
 
@@ -61,7 +94,10 @@
     };
 
     function generatePhrase() {
-      var phrase = brit.randomPhrases[0];
+      // Generate a random number between 0 and total phrases
+      var num  = Math.floor(Math.random() * (brit.randomPhrases.length));
+
+      var phrase = brit.randomPhrases[num];
       document.getElementsByTagName('textarea')[0].value = phrase;
     };
   </script>
