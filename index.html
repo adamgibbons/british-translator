@@ -38,8 +38,11 @@
 
   <div class="translator">
     <textarea placeholder="Enter some American English here..."></textarea>
-    <button class="btn" onclick="translateThis()">Britify my English!</button>
+    <button class="btn" onclick="translateThis()">Translate</button>
+    <button class="btn" onclick="generatePhrase()">Generate phrase</button>
+    <button class="btn" onclick="clearForm()">Reset</button>
     <p id="translation"></p>
+
   </div>
 
   <script>
@@ -47,12 +50,20 @@
 
     function translateThis() {
       var originalPhrase = document.getElementsByTagName('textarea')[0].value;
-
       var translatedPhrase = brit.translate(originalPhrase);
 
       document.getElementById('translation').innerHTML = 'Translation: ' + translatedPhrase;
     };
 
+    function clearForm() {
+      document.getElementsByTagName('textarea')[0].value = '';
+      document.getElementById('translation').innerHTML = '';
+    };
+
+    function generatePhrase() {
+      var phrase = brit.randomPhrases[0];
+      document.getElementsByTagName('textarea')[0].value = phrase;
+    };
   </script>
 
 </body>

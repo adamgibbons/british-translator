@@ -1,8 +1,12 @@
 describe("Brit", function() {
-  var brit;
+  var brit, phraseList;
 
   beforeEach(function() {
     brit = new Brit();
+
+    phraseList = [
+      ['legal holiday', 'bank holiday'],
+      ['cookie sheet', 'baking tray']];
     
   });
 
@@ -23,7 +27,7 @@ describe("Brit", function() {
   });
 
   it("replaces a word", function() {
-    expect(brit.replaceWord("truck")).toBe("lorry");
+    expect(brit.checkAgainstWords("truck")).toBe("lorry");
   });
 
   it("recognizes a word", function() {
@@ -43,9 +47,33 @@ describe("Brit", function() {
     expect(brit.hasPunctuation("bathroom,")).toBe(true);
   });
 
+  it("detects a possessive noun", function() {
+    expect(brit.isPossessiveNoun("truck's")).toBe(true);
+  });
+
   it("replaces a word followed by punctuation", function() {
     expect(brit.translate("bathroom!")).toBe("watercloset!");
   });
+
+  it("replaces a possessive noun", function() {
+    expect(brit.replacePossessiveNoun("truck's")).toBe("lorry's");
+  });
+
+  it("recognizes a phrase", function() {
+    expect(brit.isPhrase("word")).toBe(false);
+    expect(brit.isPhrase("two words")).toBe(true);
+  });
+
+  it("replaces a phrase with a phrase", function() {
+    expect(brit.checkAgainstPhrases("legal holiday", phraseList)).toBe("bank holiday");
+    // expect(brit.checkAgainstPhrases("apartment building", phraseList)).toBe("block of flats");
+  });
+
+  it("replaces a phrase within a larger string", function() {
+    expect(brit.checkAgainstPhrases("this legal holiday or cookie sheet", phraseList)).toBe("this bank holiday or baking tray");
+  });
+
+
 
 
 

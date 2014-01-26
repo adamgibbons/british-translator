@@ -1,5 +1,10 @@
 function Brit() {};
 
+Brit.prototype.randomPhrases = [
+  "Have you checked your truck's gas level since the odometer broke?"
+]
+
+// Wordlist structure: [American word, British word]
 Brit.prototype.wordList = 
   [['truck','lorry'],
   ['bathroom','watercloset'],
@@ -15,24 +20,20 @@ Brit.prototype.wordList =
   ['instant replay', 'action replay'],
   ['airfoil', 'aerofoil'],
   ['airplane', 'aeroplane'],
-  ['advice columnist', 'agony aunt'],
-  ['Allen wrench', 'Allen key'],
   ['aluminum', 'aluminium'],
   ['anise', 'aniseed'],
   ['counterclockwise', 'anticlockwise'],
-  ['tractor-trailer', 'articulated lorry'],
-  ['uneven bars', 'asymmetric bars'],
+  ['gas', 'petrol'],
+  // ['tractor-trailer', 'articulated lorry'],
+  
   ['eggplant', 'aubergine'],
-  ['cookie sheet', 'baking tray'],
-  ['legal holiday', 'bank holiday'],
   ['beet(s)', 'beetroot'],
   ['check', 'bill'],
-  ['cookie; cracker', 'biscuit'],
-  ['underground economy', 'black economy'],
-  ['sponge bath', 'blanket bath'],
-  ['(window) shade', 'blind'],
-  ['apartment building', 'block of flats'],
-  ['coveralls', 'boiler suit'],
+  ['cracker', 'biscuit'],
+
+  // ['(window) shade', 'blind'],
+  
+  // ['coveralls', 'boiler suit'],
   ['hood', 'bonnet (of a car)'],
   ['tube top', 'boob tube'],
   ['trunk', 'boot (of a car)'],
@@ -107,8 +108,9 @@ Brit.prototype.wordList =
   ['bangs', 'fringe (hair)'],
   ['American plan', 'full board (in hotels)'],
   ['period', 'full stop (punctuation)'],
-  ['yard; lawn', 'garden'],
-  ['leverage', 'gearing (finance)'],
+  ['yard', 'garden'],
+  ['lawn', 'garden'],
+  // ['leverage', 'gearing (finance)'],
   ['gearshift', 'gear lever'],
   ['freight train', 'goods train'],
   ['wax paper/waxed paper', 'greaseproof paper'],
@@ -226,7 +228,7 @@ Brit.prototype.wordList =
   ['traffic circle', 'roundabout (in road)'],
   ['rowboat', 'rowing boat'],
   ['sailboat', 'sailing boat'],
-  ['sedan', 'saloon (car)'],
+  ['sedan', 'saloon'],
   ['sandbox', 'sandpit'],
   ['layer cake', 'sandwich cake'],
   ['sanitary napkin', 'sanitary towel'],
@@ -301,8 +303,23 @@ Brit.prototype.wordList =
   ['zee', 'zed (letter Z)'],
   ['zipper', 'zip']];
 
-Brit.prototype.replaceWord = function(word) {
+var phraseList = [
+  ['legal holiday', 'bank holiday'],
+  ['cookie sheet', 'baking tray'],
+  ['advice columnist', 'agony aunt'],
+  ['Allen wrench', 'Allen key'],
+  ['uneven bars', 'asymmetric bars'],
+  ['underground economy', 'black economy'],
+  ['sponge bath', 'blanket bath'],
+  ['apartment building', 'block of flats']];
+
+Brit.prototype.checkAgainstWords = function(word) {
   for (var i = 0; i < this.wordList.length; i++) {
+
+    if (this.isPossessiveNoun(word)) {
+      return this.replacePossessiveNoun(word);
+    }
+
     if (this.wordList[i][0] == word) {
       return this.wordList[i][1];
     }
@@ -318,6 +335,25 @@ Brit.prototype.replaceWord = function(word) {
   return word;
 }
 
+Brit.prototype.replacePossessiveNoun = function(noun) {
+  return this.checkAgainstWords(noun.slice(0, -2)) + "'s";
+}
+
+Brit.prototype.isPossessiveNoun = function(noun) {
+  if (noun.slice(-2) === "'s") {
+    return true;
+  }
+  return false;
+}
+
+Brit.prototype.checkAgainstPhrases = function(input, phraseList) {
+  for (var i = 0; i < phraseList.length; i++) {
+    var pattern = new RegExp(phraseList[i][0],'g');
+    input = input.replace(pattern, phraseList[i][1]);
+  }
+  return input;
+}
+
 Brit.prototype.hasPunctuation = function(word) {
   if (word.search(/\.|\!|,|\?|;/) > 0) {
     return true;
@@ -330,10 +366,15 @@ Brit.prototype.isWord = function(input) {
   if (input.indexOf(' ') === -1) {
     return true;
   }
-
   return false;
 }
 
+Brit.prototype.isPhrase = function(input) {
+  if (input.indexOf(' ') > 0) {
+    return true;
+  }
+  return false;
+}
 
 Brit.prototype.translate = function(input) {
 
@@ -361,53 +402,19 @@ Brit.prototype.translate = function(input) {
     }
   }
 
-  var phrase = [];
   if (this.isWord(input)) {
-    return this.replaceWord(input);
+    return this.checkAgainstWords(input);
   } else {
+
+
+
+    var phrase = [];
     var rawPhrase = input.split(' ');
     for (var i = 0; i < rawPhrase.length; i++) {
-      phrase.push(this.replaceWord(rawPhrase[i]));
+      phrase.push(this.checkAgainstWords(rawPhrase[i]));
     }
   }
 
   phrase = phrase.join(' ');
   return phrase;
 }
-
-
-
-
-
-
-
-
-
-// Brit.prototype.translate = function(input) {
-//   if (this.isWord(input)) {
-//     this.replaceWord(input);
-//   }
-// };
-
-
-
-
-
-
-
-
-// Player.prototype.pause = function() {
-//   this.isPlaying = false;
-// };
-
-// Player.prototype.resume = function() {
-//   if (this.isPlaying) {
-//     throw new Error("song is already playing");
-//   }
-
-//   this.isPlaying = true;
-// };
-
-// Player.prototype.makeFavorite = function() {
-//   this.currentlyPlayingSong.persistFavoriteStatus(true);
-// };
