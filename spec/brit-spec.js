@@ -20,11 +20,11 @@ describe("Brit", function() {
   });
 
   it("replaces a word in a phrase", function() {
-    expect(brit.translate("the bathroom")).toBe("the watercloset");
+    expect(brit.translate("the bathroom")).toBe("the loo");
   });
 
   it("replaces multiple words in a phrase", function() {
-    expect(brit.translate("the truck is a bathroom")).toBe("the lorry is a watercloset");
+    expect(brit.translate("the truck is a bathroom")).toBe("the lorry is a loo");
   });
 
   it("detects a word followed by punctuation", function() {
@@ -36,7 +36,7 @@ describe("Brit", function() {
   });
 
   it("replaces a word followed by punctuation", function() {
-    expect(brit.translate("bathroom!")).toBe("watercloset!");
+    expect(brit.translate("bathroom!")).toBe("loo!");
   });
 
   it("replaces a possessive noun", function() {
@@ -61,7 +61,7 @@ describe("Brit", function() {
 
 
 
-  
+
 
   it("throws an error when passed a non-string", function() {
     var responseError = new TypeError("I an't a bloody calculator. Gimme a string, meghead!");
